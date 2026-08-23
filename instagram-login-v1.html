@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .login-container {
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 1px;
+            margin: 0 0 10px;
+            padding: 10px 0;
+            width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .login-container .logo {
+            margin: 22px auto 12px;
+            width: 175px;
+        }
+
+        .login-container .logo img {
+            width: 100%;
+        }
+
+        .login-container input {
+            background-color: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            padding: 9px 8px;
+            width: 258px;
+            margin-bottom: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .login-container button {
+            background-color: #0095f6;
+            border: 1px solid #0095f6;
+            border-radius: 4px;
+            color: #fff;
+            font-weight: 600;
+            padding: 5px 9px;
+            width: 268px;
+            margin-top: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .login-container button:disabled {
+            background-color: rgba(0, 149, 246, .3);
+            border-color: rgba(0, 149, 246, .3);
+            cursor: default;
+        }
+
+        .separator {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            width: 268px;
+        }
+
+        .separator .line {
+            flex-grow: 1;
+            height: 1px;
+            background-color: #dbdbdb;
+        }
+
+        .separator .text {
+            color: #8e8e8e;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 15px;
+            margin: 0 18px;
+        }
+
+        .facebook-login {
+            color: #385185;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .facebook-login::before {
+            content: "";
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgcm9sZT0iaW1nIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiMzODUxODUiIGQ9Ik0xMiAwQzUuMzcyIDAgMCA1LjM3MiAwIDEyYzAgNS44IDQuMjQ0IDEwLjYwNCA5Ljg1IDExLjUzdi04LjI3Mkg3LjY4VjEwLjEyNmgxLjY0NHYtMS4yNjJjMC0xLjU5NS44NTYtMi41NjkgMi42MDQtMi41NjlMNC42ODUgNi4yODh2Mi4xNkwzLjczMiA2LjUxNHYtMS43NmwzLjY4Ni01LjQ1YzAgMC42Ny4xNDkgMS4zMS40MjMgMS44MDggMi4yMjMgNC4yNzcgNy4yNjggNi4xOTMgOC42MDMgNS4xOTkgMi4zMjgtMS42OTktMS4yNTQtNC4xMTctMi4wNDItNi42MTMtLjI1My0uNzgtLjQzMi0xLjQxLS40ODgtMS43MTYtLjAzOC0uMjQxLS4wNTYtLjUwMy0uMDU2LS44MjggMC0uNjM3LjE0Ny0xLjA3OS4zNDUtMS4xMTMuMzY4LS4wNjQuNzM0LS4xMTkgMS4wNTYtLjE1Ni4zOTUtLjA0Ni42NjctLjA3NC44MTUtLjA4M0MxNi45MDcgMi43NDUgMTcuMDU3IDIuODExIDE3LjMwNyAyLjk2IDE3LjYyNyAzLjM3MiAxNy43NDggNC4xMzcgMTcuNDggNS4yMDQgMTYuOTA2IDcuMzggMTUuMjY1IDkuNTQ1IDEyLjIyIDEwLjA5NiAxMS40NyAxMC4xNTQgMTEuMDE0IDEwLjAxNCAxMS4wMTQgOS40NTggMTEuMDE0IDguNTg3IDEwLjE1NCA3LjczMiAxMS40NyA3LjY2NiAxMS42ODkgNy43MDIgMTEuOTY1IDcuNzA1IDEyLjI2MSA3LjUwNSAxMy41MDcgNi43MzYgMTQuMTMyIDUuNjMgMTQuMTMyIDQuNDI3IDE0LjEzMiAzLjIxNSAxMy4yNDMgMi4zMjMgMTIuMjYxIDEuMzQ2IDExLjQyMi44OCAxMC44MzYgLjU1OCAxMC4xNDYuNDAxIDkuNDAyLjM0NiA4LjY2Ni4zNzYgNy44OTYgLjQzMiA3LjA5Mi41MTggNi4yNzYgLjYwOSA1LjQ2Ni42NTEgNC42NjYuNjc5IDMuODY2LjY4MiAzLjA5OC42OTYgMi4zNTUuNzIgMS41ODkuNzY2LjgyNC44MTUgLjMzNS44MjMgMCAuODIzIDAgMy40NDcgMCA2LjIzNS41MjUgOS41MiAxLjQ4IDEyLjIyIDEuNDggMTIuMjIgMy4wMi4xMTcuODE5IDMuNjkgMS4xMDQgNy40OTcgMi4wNCAxMS42ODkgMy40MzIgMTcuNzM3IDcuMjQ1IDIwLjY2IDEyLjI2MSA2LjEzMiA0Ljg1NiAxMC4xNTQgOC4wODkgMTEuOTg5IDkuNTA0IDE0LjE2MiAxMS4wNDUgMTQuNDMgMTIuNTY1IDE0LjQzIDE1LjM1NiAxNC40MyAxNy4wMDkgMTQuMDQ4IDE4LjQ3IDEzLjQ5NyAxOS42MDggMTIuODk2IDIwLjcyMiAxMi4yNjEgMjEuNjg1IDEwL2ExNi4zNjEgMTYuMzYxIDAgMCAxLTIuMjg2IDIuODg2Yy0xLjMxIDEuNTEtMi43NzggMi44MjYtNC4wMzEgMy44ODQtMi42OTYgMi4zMTItNS43NTYgMy42My05LjExIDMuNjMtMy43OTIgMC03LjExLjkxNi0xMC4wOTYgMi43NTUtLjA1Ny4wMzQtLjEyLjA2Mi0uMTg1LjA4OC0uNzEzLjI3Ny0xLjUxOS41MTYtMi4zMzYuNjk3LTMuNTMzLjcwNi03LjUwOC44Ny0xMS4zMTMgLjQ3LS40NDctLjA0NS0uODk4LS4wOTEtMS4zNTItLjEzNy0xLjM2MS0uMTQxLTIuNjI1LS4yOTMtMy44MTMtLjQ1LTcuNzgzLTEuMDQ2LTEzLjc5OC0zLjI1LTE2LjI1LTUuNzExLTIuNDI4LTIuNDM0LTQuMTQ4LTUuNjItNS4xMTctOS4wOTEtLjM0OC0xLjIyLS41NTktMi40OTItLjY0Ni0zLjgxMy0uMDk2LTEuNTE3LS4wOTYtMy4wMyAwLTQuNS4xNDQtMi4xNzYuNTczLTQuMyAxLjEyLTUuOTM5IDEuMTM1LTMuNDI5IDMuNjIzLTYuMyA3LjQ2OC04LjMyMiAzLjEzMi0xLjU1IDYuMzA1LTIuNDMzIDkuNTc2LTIuNTEgMy4xNTctLjA3OCAzLjI4My0uMDggMy40NDItLjA4IDEuNzc2IDAgMS42MTUuMTM1IDEuNTYgMS40NDItLjAyMS41NjItLjEyNyAxLjE0LS4zMjIgMS43MDMtLjM3OCAxLjEzNS0uOTQ4IDIuMjA3LTEuNjcyIDMuMTA4LTIuMjU3IDIuODMyLTYuMjE0IDQuODIzLTEwLjgyOSA1LjU2Mi01LjE2OC44MTUtMTAuNjUxLS41MDUtMTQuMTItMy43OTYtMy4zODMtMy4yMy01LjcyMy03LjM0OC02LjI4LTEyLjU3OC0uMjQxLTIuMTg5LS4zMDQtNC40MDMtLjE4OS02LjUyMi4xNS0yLjg0NSAxLjE0NS01LjU1MiAyLjcxNC04LjA4OSAxLjU5Mi0yLjIyNSAzLjYwOC00LjA3NyA1Ljg3NS01LjU0MSAzLjM1NC0yLjE4IDcuMTUtMy41ODUgMTEuMjc1LTMuOTgyIDMuOTgyLS4zOTcgOC4wOTctLjI2MiAxMi4wNzcuMzk1IDQuMjUuNzA0IDguMTcgMi4wNSA5LjU0NSAzLjMyOCAzLjA5OCAyLjY0IDQuODc4IDYuNDI2IDUuMDIyIDEwLjg0Ny4xMyAzLjgyNC0uNzEgNy41OTctMi40MTcgMTAuODU2LTIuMTM4IDMuOTk0LTUuNzQgNy40MDUtMTAuMTM3IDkuNTA2LTMuOTUxIDIuMjctOC4xNjcgMy41Ny0xMi42MjggMy45MDYtNC41MTIuMzM3LTkuMDU0LS4xNi0xMy40MTUtMS4zNzctNC40NjUtMS4yNC04LjQ3LTMuNTk1LTExLjU1NC02LjQ4NC0yLjcxLTIuNTI2LTQuNzM0LTUuNTM1LTYuMDE3LTguODgyLS45MjQtMi4yNzYtMS40NDYtNC42ODEtMS41NjUtNy4xMjItLjEyMi0yLjQ3NC0uMDY4LTQuOTQ0LjE2LTYuOTk4LjE4LTEuNjY0LjQ1MS0zLjI3OS44MTUtNC44MDQtLjM0Ni4wMDUtLjY5NS4wMS0xLjA0Ny4wMTItMS4wNDkgMC0yLjA5Ni0uMDEzLTMuMTQzLS4wNC0uNjE1LS4wMTgtMS4yMy0uMDQzLTEuODQzLS4wNzQtMi41NjctLjEzMi01LjA0NC0uMzM5LTcuMjQ2LS42MTMtLjI1NS0uMDMyLS41MDctLjA1OC0uNzU4LS4wODItMi42MTUtLjI1LTUuMDE5LS42My03LjA4My0xLjE0My0yLjQ1Ny0uNjItNC4yOTQtMS4zMjUtNS40NTctMi4wMDQtMS4wMzQtLjYxNC0xLjU4LTEuMjk2LTEuNTgzLTEuNjQ2LS4wMDUtLjQzNC41MTUtLjc0NSAxLjIzNS0uODIzIDIuNjc3LS4yNzIgNS41MTYtLjUwNSA4LjQzMS0uNjMyIDMuNTYyLS4xNTQgNi44MzQtLjI0OSA5LjY4Mi0uMjkxIDIuOTQyLS4wNDMgNS40MDYtLjA2NyA3LjQxMi0uMDY3eiIvPjwvc3ZnPg==');
+            background-repeat: no-repeat;
+            background-size: 16px 16px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .forgot-password {
+            color: #00376b;
+            font-size: 12px;
+            margin-top: 12px;
+            text-decoration: none;
+        }
+
+        .signup-container {
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 1px;
+            margin: 10px 0;
+            padding: 20px 0;
+            width: 350px;
+            text-align: center;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .signup-container a {
+            color: #0095f6;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .get-app {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .app-badges {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .app-badges img {
+            height: 40px;
+            margin: 0 5px;
+        }
+
+        .footer {
+            margin-top: 50px;
+            color: #8e8e8e;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #8e8e8e;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png" alt="Instagram logo">
+        </div>
+        <form>
+            <input type="text" placeholder="Phone number, username, or email">
+            <input type="password" placeholder="Password">
+            <button type="submit" disabled>Log In</button>
+        </form>
+        <div class="separator">
+            <div class="line"></div>
+            <div class="text">OR</div>
+            <div class="line"></div>
+        </div>
+        <a href="#" class="facebook-login">Log in with Facebook</a>
+        <a href="#" class="forgot-password">Forgot password?</a>
+    </div>
+
+    <div class="signup-container">
+        Don't have an account? <a href="#">Sign up</a>
+    </div>
+
+    <div class="get-app">
+        Get the app.
+        <div class="app-badges">
+            <img src="https://www.instagram.com/static/images/appstore-install-badges/badge_ios_english-en.png/180ae7a0bcf7.png" alt="Download on the App Store">
+            <img src="https://www.instagram.com/static/images/appstore-install-badges/badge_android_english-en.png/e9cd846dc748.png" alt="Get it on Google Play">
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div>
+            <a href="#">Meta</a>
+            <a href="#">About</a>
+            <a href="#">Blog</a>
+            <a href="#">Jobs</a>
+            <a href="#">Help</a>
+            <a href="#">API</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Top Accounts</a>
+            <a href="#">Locations</a>
+            <a href="#">Instagram Lite</a>
+            <a href="#">Contact Uploading & Non-Users</a>
+        </div>
+        <div>
+            <a href="#">English</a>
+            <span>&copy; 2023 Instagram from Meta</span>
+        </div>
+    </footer>
+</body>
+</html>
